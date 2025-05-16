@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VNS Private Sale</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>VNS Private Sale</h1>
+
+        <button id="connectWallet">🔗 Connect Wallet</button>
+        <p id="walletAddress">Wallet: Not connected</p>
+
+        <div class="info-box">
+            <p>USDT Balance: <span id="usdtBalance">0</span></p>
+            <p>Seller VNS Balance: <span id="sellerBalance">0</span></p>
+            <p>VNS Token Address: <span id="vnsAddress">0xYourVNSTokenAddress</span>
+                <button onclick="copyVNSAddress()">📋 Copy</button>
+            </p>
+        </div>
+
+        <div class="input-box">
+            <label>Buy VNS Amount:</label>
+            <input type="number" id="vnsAmount" min="1" placeholder="Enter VNS Amount">
+        </div>
+
+        <button id="approveBtn">✅ Approve USDT</button>
+        <button id="buyBtn">💰 Buy VNS</button>
+
+        <p id="status"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
