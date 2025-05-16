@@ -1,8 +1,8 @@
 
-const vnsPresaleAddress = "0xYourPresaleContractAddress";
-const vnsTokenAddress = "0xYourVNSTokenAddress";
-const usdtTokenAddress = "0xYourUSDTTokenAddress";
-const sellerWallet = "0xSellerWalletAddress";
+const vnsPresaleAddress = "0x1d696372c231160765ea55294B545451560451b0";
+const vnsTokenAddress = "0xD56b19A7A083E64b3f2E41cDD09BaDF2D168D101";
+const usdtTokenAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
+const sellerWallet = "0xab75520a1C19483cbA1Fbd2c74366164aaA3FD41";
 
 const vnsDecimals = 8;
 const usdtDecimals = 18;
