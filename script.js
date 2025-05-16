@@ -1,70 +1,78 @@
 
-const vnsPresaleAddress = "0x1d696372c231160765ea55294B545451560451b0";
 const vnsTokenAddress = "0xD56b19A7A083E64b3f2E41cDD09BaDF2D168D101";
 const usdtTokenAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
+const presaleContractAddress = "0x1d696372c231160765ea55294B545451560451b0";
 const sellerWallet = "0xab75520a1C19483cbA1Fbd2c74366164aaA3FD41";
 
-const vnsDecimals = 8;
-const usdtDecimals = 18;
+let account;
 
-const vnsPresaleABI = [ // Only required functions from ABI
-    { "inputs": [], "name": "pricePerVNS", "outputs": [{"internalType": "uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-    { "inputs": [{"internalType":"uint256","name":"vnsAmount","type":"uint256"}],"name":"buyTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    { "inputs": [], "name": "vnsToken", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"}
-];
-
-const erc20ABI = [
-    { "constant": true, "inputs": [{"name":"owner","type":"address"}], "name":"balanceOf", "outputs": [{"name":"","type":"uint256"}], "type":"function" },
-    { "constant": true, "inputs": [{"name":"owner","type":"address"},{"name":"spender","type":"address"}], "name":"allowance", "outputs": [{"name":"","type":"uint256"}], "type":"function" },
-    { "constant": false, "inputs": [{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}], "name":"approve", "outputs": [{"name":"","type":"bool"}], "type":"function" }
-];
-
-let web3, account;
-
-document.getElementById("connectWallet").onclick = async () => {
+// Connect wallet
+async function connectWallet() {
     if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        const accounts = await web3.eth.getAccounts();
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         account = accounts[0];
-        document.getElementById("walletAddress").innerText = "Wallet: " + account;
+        document.getElementById("walletAddress").innerText = account;
         loadBalances();
     } else {
-        alert("Install MetaMask or Web3 wallet!");
+        alert("Please install MetaMask!");
     }
-};
-
-async function loadBalances() {
-    const usdt = new web3.eth.Contract(erc20ABI, usdtTokenAddress);
-    const vns = new web3.eth.Contract(erc20ABI, vnsTokenAddress);
-    const usdtBal = await usdt.methods.balanceOf(account).call();
-    const vnsBal = await vns.methods.balanceOf(sellerWallet).call();
-    document.getElementById("usdtBalance").innerText = (usdtBal / 10 ** usdtDecimals).toFixed(2);
-    document.getElementById("sellerBalance").innerText = (vnsBal / 10 ** vnsDecimals).toFixed(2);
 }
 
-document.getElementById("approveBtn").onclick = async () => {
-    const vnsAmount = parseFloat(document.getElementById("vnsAmount").value);
-    const presale = new web3.eth.Contract(vnsPresaleABI, vnsPresaleAddress);
-    const usdt = new web3.eth.Contract(erc20ABI, usdtTokenAddress);
-    const price = await presale.methods.pricePerVNS().call();
-    const usdtAmount = (vnsAmount * price) / (10 ** vnsDecimals);
-    const usdtAmountWei = web3.utils.toBN(usdtAmount.toString());
-    await usdt.methods.approve(vnsPresaleAddress, usdtAmountWei).send({ from: account });
-    document.getElementById("status").innerText = "USDT Approved!";
-};
+// Load USDT & VNS balances
+async function loadBalances() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const usdt = new ethers.Contract(usdtTokenAddress, [
+        "function balanceOf(address) view returns (uint256)"
+    ], provider);
+    const vns = new ethers.Contract(vnsTokenAddress, [
+        "function balanceOf(address) view returns (uint256)"
+    ], provider);
 
-document.getElementById("buyBtn").onclick = async () => {
-    const vnsAmount = parseFloat(document.getElementById("vnsAmount").value);
-    const vnsAmountUnits = web3.utils.toBN((vnsAmount * 10 ** vnsDecimals).toString());
-    const presale = new web3.eth.Contract(vnsPresaleABI, vnsPresaleAddress);
-    await presale.methods.buyTokens(vnsAmountUnits).send({ from: account });
-    document.getElementById("status").innerText = "✅ VNS Purchase Successful!";
-    loadBalances();
-};
+    const usdtBalance = await usdt.balanceOf(account);
+    const sellerBalance = await vns.balanceOf(sellerWallet);
 
-function copyVNSAddress() {
-    const text = "0xYourVNSTokenAddress";
-    navigator.clipboard.writeText(text);
-    alert("VNS Contract Address Copied!");
+    document.getElementById("usdtBalance").innerText = (Number(usdtBalance) / 1e18).toFixed(2) + " USDT";
+    document.getElementById("sellerBalance").innerText = (Number(sellerBalance) / 1e8).toFixed(2) + " VNS";
+}
+
+// Approve USDT
+async function approveUSDT() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const usdt = new ethers.Contract(usdtTokenAddress, [
+        "function approve(address spender, uint256 amount) public returns (bool)"
+    ], signer);
+
+    const amount = BigInt(1_000_000_000_000_000_000_000); // approve large amount
+    const tx = await usdt.approve(presaleContractAddress, amount);
+    await tx.wait();
+    alert("USDT Approved!");
+}
+
+// Buy VNS
+async function buyVNS() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(presaleContractAddress, [
+        "function buyTokens(uint256 vnsAmount) public",
+        "function pricePerVNS() public view returns (uint256)"
+    ], signer);
+
+    const vnsInput = document.getElementById("vnsInput").value;
+    const vnsAmount = BigInt(Math.floor(parseFloat(vnsInput) * 1e8)); // VNS has 8 decimals
+
+    if (vnsAmount <= 0n) {
+        alert("Enter a valid VNS amount");
+        return;
+    }
+
+    const tx = await contract.buyTokens(vnsAmount);
+    await tx.wait();
+    alert("VNS Purchased!");
+}
+
+// Copy token address
+function copyAddress() {
+    navigator.clipboard.writeText(vnsTokenAddress);
+    alert("Token address copied!");
 }
