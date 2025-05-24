@@ -34,7 +34,8 @@ async function initDApp() {
         // Check if Web3 is available
         if (!window.ethereum) {
             showStatusMessage("Please install a Web3 wallet like MetaMask, Trust Wallet, or Binance Wallet", "error");
-            document.getElementById('connectWallet').style.display = 'block';
+            const connectBtn = document.getElementById('connectWallet');
+            if (connectBtn) connectBtn.style.display = 'block';
             return;
         }
         
@@ -55,12 +56,16 @@ async function initDApp() {
         // Check if we're on supported network
         if (!currentNetwork) {
             showStatusMessage(`Unsupported network. Please switch to BSC Mainnet (56) or Testnet (97)`, "error");
-            document.getElementById('networkSwitch').style.display = 'block';
+            const networkSwitch = document.getElementById('networkSwitch');
+            if (networkSwitch) networkSwitch.style.display = 'block';
             return;
         }
         
         // Set contract explorer link
-        document.getElementById('contractLink').href = `${currentNetwork.explorer}/address/${currentNetwork.contractAddress}`;
+        const contractLink = document.getElementById('contractLink');
+        if (contractLink) {
+            contractLink.href = `${currentNetwork.explorer}/address/${currentNetwork.contractAddress}`;
+        }
         
         // Initialize contracts
         contract = new web3.eth.Contract(contractABI, currentNetwork.contractAddress);
@@ -85,9 +90,11 @@ async function initDApp() {
         setupEventListeners();
         
         // Listen for account and network changes
-        window.ethereum.on('accountsChanged', handleAccountsChanged);
-        window.ethereum.on('chainChanged', handleChainChanged);
-        window.ethereum.on('disconnect', handleDisconnect);
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+            window.ethereum.on('chainChanged', handleChainChanged);
+            window.ethereum.on('disconnect', handleDisconnect);
+        }
         
     } catch (error) {
         console.error("Error initializing DApp:", error);
@@ -183,43 +190,64 @@ function parseTokenAmount(amount, decimals = 18) {
 
 function showStatusMessage(message, type) {
     const statusElement = document.getElementById('statusMessage');
-    statusElement.textContent = message;
-    statusElement.className = `status-message ${type}`;
-    statusElement.style.display = 'block';
-    
-    setTimeout(() => {
-        statusElement.style.display = 'none';
-    }, 5000);
+    if (statusElement) {
+        statusElement.textContent = message;
+        statusElement.className = `status-message ${type}`;
+        statusElement.style.display = 'block';
+        
+        setTimeout(() => {
+            statusElement.style.display = 'none';
+        }, 5000);
+    }
 }
 
 function showLoading(show) {
-    document.getElementById('loadingSpinner').style.display = show ? 'flex' : 'none';
+    const spinner = document.getElementById('loadingSpinner');
+    if (spinner) {
+        spinner.style.display = show ? 'flex' : 'none';
+    }
 }
 
 // Update UI with wallet and contract info
 async function updateUI() {
+    const walletAddressEl = document.getElementById('walletAddress');
+    const networkNameEl = document.getElementById('networkName');
+    const vnstPriceEl = document.getElementById('vnstPrice');
+    const totalPurchasedEl = document.getElementById('totalPurchased');
+    const sellerVnstBalanceEl = document.getElementById('sellerVnstBalance');
+    
     if (accounts.length) {
         // Display wallet address
-        const shortAddress = `${accounts[0].substring(0, 6)}...${accounts[0].substring(38)}`;
-        document.getElementById('walletAddress').textContent = shortAddress;
+        if (walletAddressEl) {
+            const shortAddress = `${accounts[0].substring(0, 6)}...${accounts[0].substring(38)}`;
+            walletAddressEl.textContent = shortAddress;
+        }
         
         // Display network name
-        document.getElementById('networkName').textContent = currentNetwork.name;
+        if (networkNameEl) {
+            networkNameEl.textContent = currentNetwork.name;
+        }
         
         try {
             // Load contract data with proper error handling
-            const vnstPrice = await contract.methods.vnstPrice().call();
-            document.getElementById('vnstPrice').textContent = formatTokenAmount(vnstPrice, 18);
+            if (vnstPriceEl) {
+                const vnstPrice = await contract.methods.vnstPrice().call();
+                vnstPriceEl.textContent = formatTokenAmount(vnstPrice, 18);
+            }
             
-            const totalPurchased = await contract.methods.totalPurchased(accounts[0]).call();
-            document.getElementById('totalPurchased').textContent = formatTokenAmount(totalPurchased, vnstDecimals);
+            if (totalPurchasedEl) {
+                const totalPurchased = await contract.methods.totalPurchased(accounts[0]).call();
+                totalPurchasedEl.textContent = formatTokenAmount(totalPurchased, vnstDecimals);
+            }
             
             // Get seller VNST balance
-            const vnstContract = new web3.eth.Contract(vnstABI, currentNetwork.vnstAddress);
-            const sellerWallet = await contract.methods.sellerWallet().call();
-            const sellerBalance = await vnstContract.methods.balanceOf(sellerWallet).call()
-                .catch(() => "0"); // Fallback if error
-            document.getElementById('sellerVnstBalance').textContent = formatTokenAmount(sellerBalance, vnstDecimals);
+            if (sellerVnstBalanceEl) {
+                const vnstContract = new web3.eth.Contract(vnstABI, currentNetwork.vnstAddress);
+                const sellerWallet = await contract.methods.sellerWallet().call();
+                const sellerBalance = await vnstContract.methods.balanceOf(sellerWallet).call()
+                    .catch(() => "0"); // Fallback if error
+                sellerVnstBalanceEl.textContent = formatTokenAmount(sellerBalance, vnstDecimals);
+            }
             
             // Check approvals
             await checkApprovals();
@@ -229,9 +257,11 @@ async function updateUI() {
             showStatusMessage("Error loading contract data. Try refreshing the page.", "error");
         }
     } else {
-        document.getElementById('walletAddress').textContent = "Not connected";
-        document.getElementById('usdtApprovedStatus').textContent = "No";
-        document.getElementById('sellerApprovedStatus').textContent = "No";
+        if (walletAddressEl) walletAddressEl.textContent = "Not connected";
+        const usdtApprovedStatus = document.getElementById('usdtApprovedStatus');
+        const sellerApprovedStatus = document.getElementById('sellerApprovedStatus');
+        if (usdtApprovedStatus) usdtApprovedStatus.textContent = "No";
+        if (sellerApprovedStatus) sellerApprovedStatus.textContent = "No";
     }
 }
 
@@ -241,18 +271,22 @@ async function checkApprovals() {
     
     try {
         const usdtContract = new web3.eth.Contract(usdtABI, currentNetwork.usdtAddress);
+        const usdtApprovedStatus = document.getElementById('usdtApprovedStatus');
+        const sellerApprovedStatus = document.getElementById('sellerApprovedStatus');
         
         // Check USDT allowance for the contract
-        const usdtAllowance = await usdtContract.methods.allowance(accounts[0], currentNetwork.contractAddress).call();
-        document.getElementById('usdtApprovedStatus').textContent = 
-            usdtAllowance > 0 ? "Yes" : "No";
+        if (usdtApprovedStatus) {
+            const usdtAllowance = await usdtContract.methods.allowance(accounts[0], currentNetwork.contractAddress).call();
+            usdtApprovedStatus.textContent = usdtAllowance > 0 ? "Yes" : "No";
+        }
         
         // Check VNST allowance for the contract (if needed)
-        const vnstContract = new web3.eth.Contract(vnstABI, currentNetwork.vnstAddress);
-        const vnstAllowance = await vnstContract.methods.allowance(accounts[0], currentNetwork.contractAddress).call()
-            .catch(() => "0"); // Fallback if error
-        document.getElementById('sellerApprovedStatus').textContent = 
-            vnstAllowance > 0 ? "Yes" : "No";
+        if (sellerApprovedStatus) {
+            const vnstContract = new web3.eth.Contract(vnstABI, currentNetwork.vnstAddress);
+            const vnstAllowance = await vnstContract.methods.allowance(accounts[0], currentNetwork.contractAddress).call()
+                .catch(() => "0"); // Fallback if error
+            sellerApprovedStatus.textContent = vnstAllowance > 0 ? "Yes" : "No";
+        }
             
     } catch (error) {
         console.error("Error checking approvals:", error);
@@ -325,34 +359,57 @@ async function purchaseVNST(usdtAmount) {
 // Setup event listeners
 function setupEventListeners() {
     // Connect wallet button
-    document.getElementById('connectWallet').addEventListener('click', async () => {
-        try {
-            accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            await updateUI();
-        } catch (error) {
-            showStatusMessage("Error connecting wallet: " + error.message, "error");
-        }
-    });
+    const connectWalletBtn = document.getElementById('connectWallet');
+    if (connectWalletBtn) {
+        connectWalletBtn.addEventListener('click', async () => {
+            try {
+                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                await updateUI();
+            } catch (error) {
+                showStatusMessage("Error connecting wallet: " + error.message, "error");
+            }
+        });
+    }
     
     // Network switch buttons
-    document.getElementById('switchToMainnet').addEventListener('click', () => switchNetwork(56));
-    document.getElementById('switchToTestnet').addEventListener('click', () => switchNetwork(97));
+    const switchToMainnetBtn = document.getElementById('switchToMainnet');
+    const switchToTestnetBtn = document.getElementById('switchToTestnet');
+    
+    if (switchToMainnetBtn) {
+        switchToMainnetBtn.addEventListener('click', () => switchNetwork(56));
+    }
+    if (switchToTestnetBtn) {
+        switchToTestnetBtn.addEventListener('click', () => switchNetwork(97));
+    }
     
     // Approve buttons
-    document.getElementById('approveUSDT').addEventListener('click', () => approveTokens('usdt'));
-    document.getElementById('approveSeller').addEventListener('click', () => approveTokens('vnst'));
+    const approveUSDTBtn = document.getElementById('approveUSDT');
+    const approveSellerBtn = document.getElementById('approveSeller');
+    
+    if (approveUSDTBtn) {
+        approveUSDTBtn.addEventListener('click', () => approveTokens('usdt'));
+    }
+    if (approveSellerBtn) {
+        approveSellerBtn.addEventListener('click', () => approveTokens('vnst'));
+    }
     
     // Purchase form
-    document.getElementById('purchaseForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const usdtAmount = parseFloat(document.getElementById('usdtAmount').value);
-        if (isNaN(usdtAmount) || usdtAmount <= 0) {
-            showStatusMessage("Please enter a valid USDT amount", "error");
-            return;
-        }
-        await purchaseVNST(usdtAmount);
-    });
+    const purchaseForm = document.getElementById('purchaseForm');
+    if (purchaseForm) {
+        purchaseForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const usdtAmountInput = document.getElementById('usdtAmount');
+            if (usdtAmountInput) {
+                const usdtAmount = parseFloat(usdtAmountInput.value);
+                if (isNaN(usdtAmount) || usdtAmount <= 0) {
+                    showStatusMessage("Please enter a valid USDT amount", "error");
+                    return;
+                }
+                await purchaseVNST(usdtAmount);
+            }
+        });
+    }
 }
 
 // Initialize when page loads
-window.addEventListener('load', initDApp);
+window.addEventListener('DOMContentLoaded', initDApp);
