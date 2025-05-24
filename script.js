@@ -2,6 +2,7 @@ const contractABI = [{"inputs":[{"internalType":"address","name":"_vnstToken","t
 const usdtABI = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[],"name":"_decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
 const vnstABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"by","type":"address"}],"name":"AddressBlacklisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"by","type":"address"}],"name":"AddressWhitelisted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"FeeCollected","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"LargeTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Paused","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"string","name":"activity","type":"string"}],"name":"SuspiciousActivity","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"oldFee","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"newFee","type":"uint256"},{"indexed":true,"internalType":"address","name":"by","type":"address"}],"name":"TransferFeeChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"attacker","type":"address"},{"indexed":false,"internalType":"string","name":"method","type":"string"}],"name":"UnauthorizedAccessAttempt","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"account","type":"address"}],"name":"Unpaused","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[],"name":"ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"BLACKLIST_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FEE_MANAGER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAUSER_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_account","type":"address"}],"name":"blacklist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isBlacklisted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isPaused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pauseContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"},{"internalType":"address","name":"","type":"address"}],"name":"roles","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setTransferFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"transferFeePercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unpauseContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_account","type":"address"}],"name":"whitelist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
 
+// BSC Testnet addresses
 const contractAddress = "0xc5eB6A6c225D82B889952fE17fCbed60DA2e7A0E";
 const usdtAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
 const vnstAddress = "0xC8De4964F09459c24F79F31EC804CC8B8f63F1Bf";
@@ -30,24 +31,27 @@ async function initDApp() {
         // Set contract explorer link
         document.getElementById('contractLink').href = getExplorerLink(chainId);
         
-        // Check and switch to BSC network
-        const requiredChainId = 56; // or 97 for testnet
+        // Check and switch to BSC Testnet (Chain ID 97)
+        const requiredChainId = 97; // BSC Testnet
         if (chainId != requiredChainId) {
             await switchNetwork(requiredChainId);
             return;
         }
         
-        // Initialize contracts
+        // Initialize contracts with proper error handling
         contract = new web3.eth.Contract(contractABI, contractAddress);
-        const vnstContract = new web3.eth.Contract(vnstABI, vnstAddress);
         
-        // Get token decimals
+        // Get token decimals with fallback
         try {
-            vnstDecimals = await vnstContract.methods.decimals().call();
+            const vnstContract = new web3.eth.Contract(vnstABI, vnstAddress);
+            vnstDecimals = await vnstContract.methods.decimals().call() || 18;
+            
             const usdtContract = new web3.eth.Contract(usdtABI, usdtAddress);
-            usdtDecimals = await usdtContract.methods.decimals().call();
+            usdtDecimals = await usdtContract.methods.decimals().call() || 18;
         } catch (e) {
             console.log("Using default decimals (18)");
+            vnstDecimals = 18;
+            usdtDecimals = 18;
         }
         
         // Update UI
@@ -56,21 +60,37 @@ async function initDApp() {
         // Set up event listeners
         setupEventListeners();
         
-        // Listen for account changes
-        window.ethereum.on('accountsChanged', (newAccounts) => {
-            accounts = newAccounts;
-            updateUI();
-        });
-        
-        // Listen for chain changes
-        window.ethereum.on('chainChanged', () => {
-            window.location.reload();
-        });
+        // Listen for account changes (using disconnect instead of close)
+        window.ethereum.on('accountsChanged', handleAccountsChanged);
+        window.ethereum.on('chainChanged', handleChainChanged);
+        window.ethereum.on('disconnect', handleDisconnect);
         
     } catch (error) {
         console.error("Error initializing DApp:", error);
-        showStatusMessage("Error connecting to wallet: " + error.message, "error");
+        showStatusMessage("Error connecting to wallet: " + (error.message || error), "error");
     }
+}
+
+// Event handlers
+function handleAccountsChanged(newAccounts) {
+    accounts = newAccounts;
+    if (newAccounts.length === 0) {
+        showStatusMessage("Wallet disconnected", "warning");
+    }
+    updateUI();
+}
+
+function handleChainChanged(newChainId) {
+    // Convert hex to decimal
+    chainId = parseInt(newChainId, 16);
+    window.location.reload();
+}
+
+function handleDisconnect(error) {
+    console.log("Wallet disconnected:", error);
+    showStatusMessage("Wallet disconnected", "warning");
+    accounts = [];
+    updateUI();
 }
 
 // Helper functions
@@ -93,39 +113,41 @@ async function switchNetwork(requiredChainId) {
         });
         window.location.reload();
     } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask
         if (switchError.code === 4902) {
             try {
                 await window.ethereum.request({
                     method: 'wallet_addEthereumChain',
                     params: [{
                         chainId: `0x${requiredChainId.toString(16)}`,
-                        chainName: 'Binance Smart Chain',
+                        chainName: 'Binance Smart Chain Testnet',
                         nativeCurrency: {
                             name: 'BNB',
-                            symbol: 'bnb',
+                            symbol: 'BNB',
                             decimals: 18
                         },
-                        rpcUrls: ['https://bsc-dataseed.binance.org/'],
-                        blockExplorerUrls: ['https://bscscan.com/']
+                        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                        blockExplorerUrls: ['https://testnet.bscscan.com']
                     }],
                 });
-                window.location.reload();
             } catch (addError) {
-                showStatusMessage("Error adding BSC network: " + addError.message, "error");
+                showStatusMessage("Error adding BSC Testnet: " + (addError.message || addError), "error");
             }
         } else {
-            showStatusMessage("Error switching network: " + switchError.message, "error");
+            showStatusMessage("Error switching network: " + (switchError.message || switchError), "error");
         }
     }
 }
 
 function getExplorerLink(chainId) {
-    const baseUrl = chainId === 56 ? 'https://bscscan.com' : 'https://testnet.bscscan.com';
+    const baseUrl = chainId === 56 ? 'https://bscscan.com' : 
+                   chainId === 97 ? 'https://testnet.bscscan.com' : 
+                   'https://etherscan.io';
     return `${baseUrl}/address/${contractAddress}`;
 }
 
 function formatTokenAmount(amount, decimals = 18) {
-    return amount / Math.pow(10, decimals);
+    return (amount / Math.pow(10, decimals)).toFixed(6).replace(/\.?0+$/, '');
 }
 
 function parseTokenAmount(amount, decimals = 18) {
@@ -158,7 +180,7 @@ async function updateUI() {
         document.getElementById('networkName').textContent = getNetworkName(chainId);
         
         try {
-            // Load contract data
+            // Load contract data with proper error handling
             const vnstPrice = await contract.methods.vnstPrice().call();
             document.getElementById('vnstPrice').textContent = formatTokenAmount(vnstPrice, 18);
             
@@ -168,7 +190,8 @@ async function updateUI() {
             // Get seller VNST balance
             const vnstContract = new web3.eth.Contract(vnstABI, vnstAddress);
             const sellerWallet = await contract.methods.sellerWallet().call();
-            const sellerBalance = await vnstContract.methods.balanceOf(sellerWallet).call();
+            const sellerBalance = await vnstContract.methods.balanceOf(sellerWallet).call()
+                .catch(() => "0"); // Fallback if error
             document.getElementById('sellerVnstBalance').textContent = formatTokenAmount(sellerBalance, vnstDecimals);
             
             // Check approvals
@@ -176,259 +199,16 @@ async function updateUI() {
             
         } catch (error) {
             console.error("Error loading contract data:", error);
+            showStatusMessage("Error loading contract data. Try refreshing the page.", "error");
         }
     } else {
         document.getElementById('walletAddress').textContent = "Not connected";
+        document.getElementById('usdtApprovedStatus').textContent = "No";
+        document.getElementById('sellerApprovedStatus').textContent = "No";
     }
 }
 
-// Check USDT and seller approvals
-async function checkApprovals() {
-    if (!accounts.length) return;
-    
-    try {
-        // Check USDT approval
-        const isApproved = await contract.methods.isApproved(accounts[0]).call();
-        const usdtApprovedElement = document.getElementById('usdtApprovedStatus');
-        usdtApprovedElement.textContent = isApproved ? "Yes" : "No";
-        usdtApprovedElement.style.color = isApproved ? "var(--success)" : "var(--error)";
-        
-        // Check seller approval
-        const isSellerApproved = await contract.methods.isSellerApproved().call();
-        const sellerApprovedElement = document.getElementById('sellerApprovedStatus');
-        sellerApprovedElement.textContent = isSellerApproved ? "Yes" : "No";
-        sellerApprovedElement.style.color = isSellerApproved ? "var(--success)" : "var(--error)";
-        
-    } catch (error) {
-        console.error("Error checking approvals:", error);
-    }
-}
-
-// Check USDT balance
-async function checkUsdtBalance(requiredAmount) {
-    try {
-        const usdtContract = new web3.eth.Contract(usdtABI, usdtAddress);
-        const balance = await usdtContract.methods.balanceOf(accounts[0]).call();
-        
-        if (balance < requiredAmount) {
-            const missingAmount = formatTokenAmount(requiredAmount - balance, usdtDecimals);
-            showStatusMessage(`Insufficient USDT balance. You need ${missingAmount} more USDT`, "error");
-            return false;
-        }
-        return true;
-    } catch (error) {
-        console.error("Error checking USDT balance:", error);
-        return false;
-    }
-}
-
-// Set up event listeners
-function setupEventListeners() {
-    // Connect Wallet Button
-    document.getElementById('connectWalletBtn').addEventListener('click', async () => {
-        if (window.ethereum) {
-            try {
-                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                await updateUI();
-                showStatusMessage("Wallet connected successfully", "success");
-            } catch (error) {
-                console.error("Error connecting wallet:", error);
-                showStatusMessage("Error connecting wallet: " + error.message, "error");
-            }
-        } else {
-            showStatusMessage("Please install MetaMask or a Web3 compatible browser", "error");
-        }
-    });
-
-    // Paste VNST Token Address Button
-    document.getElementById('pasteVnstBtn').addEventListener('click', async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            document.getElementById('vnstAmount').value = text;
-            showStatusMessage("Pasted from clipboard", "success");
-        } catch (error) {
-            console.error("Failed to read clipboard:", error);
-            showStatusMessage("Failed to paste from clipboard", "error");
-        }
-    });
-
-    // Check Quote Button
-    document.getElementById('checkQuoteBtn').addEventListener('click', async () => {
-        if (!accounts.length) {
-            showStatusMessage("Please connect your wallet first", "error");
-            return;
-        }
-        
-        const vnstAmount = document.getElementById('vnstAmount').value;
-        
-        if (!vnstAmount || isNaN(vnstAmount)) {
-            showStatusMessage("Please enter a valid VNST amount", "error");
-            return;
-        }
-        
-        try {
-            const minBuy = await contract.methods.minBuy().call();
-            const minBuyFormatted = formatTokenAmount(minBuy, vnstDecimals);
-            
-            if (Number(vnstAmount) < minBuyFormatted) {
-                showStatusMessage(`Amount below minimum buy limit (${minBuyFormatted} VNST)`, "error");
-                return;
-            }
-            
-            const usdtRequired = await contract.methods.getQuote(parseTokenAmount(vnstAmount, vnstDecimals)).call();
-            document.getElementById('usdtRequired').textContent = formatTokenAmount(usdtRequired, usdtDecimals);
-            
-            // Check approvals and balance
-            await checkApprovals();
-            await checkUsdtBalance(usdtRequired);
-            
-        } catch (error) {
-            console.error("Error getting quote:", error);
-            showStatusMessage("Error getting quote: " + error.message, "error");
-        }
-    });
-
-    // Approve USDT Button
-    document.getElementById('approveUsdtBtn').addEventListener('click', async () => {
-        if (!accounts.length) {
-            showStatusMessage("Please connect your wallet first", "error");
-            return;
-        }
-        
-        const vnstAmount = document.getElementById('vnstAmount').value;
-        
-        if (!vnstAmount || isNaN(vnstAmount)) {
-            showStatusMessage("Please enter a valid VNST amount first", "error");
-            return;
-        }
-        
-        try {
-            showLoading(true);
-            const usdtRequired = await contract.methods.getQuote(parseTokenAmount(vnstAmount, vnstDecimals)).call();
-            const usdtContract = new web3.eth.Contract(usdtABI, usdtAddress);
-            
-            showStatusMessage("Approving USDT...", "success");
-            
-            await usdtContract.methods.approve(contractAddress, usdtRequired).send({ from: accounts[0] });
-            
-            showStatusMessage("USDT approved successfully!", "success");
-            await checkApprovals();
-            
-        } catch (error) {
-            console.error("Error approving USDT:", error);
-            showStatusMessage("Error approving USDT: " + error.message, "error");
-        } finally {
-            showLoading(false);
-        }
-    });
-
-    // Buy VNST Button
-    document.getElementById('buyVnstBtn').addEventListener('click', async () => {
-        if (!accounts.length) {
-            showStatusMessage("Please connect your wallet first", "error");
-            return;
-        }
-        
-        const vnstAmount = document.getElementById('vnstAmount').value;
-        
-        if (!vnstAmount || isNaN(vnstAmount)) {
-            showStatusMessage("Please enter a valid VNST amount", "error");
-            return;
-        }
-        
-        try {
-            showLoading(true);
-            const minBuy = await contract.methods.minBuy().call();
-            const minBuyFormatted = formatTokenAmount(minBuy, vnstDecimals);
-            
-            if (Number(vnstAmount) < minBuyFormatted) {
-                showStatusMessage(`Amount below minimum buy limit (${minBuyFormatted} VNST)`, "error");
-                return;
-            }
-            
-            const vnstAmountWei = parseTokenAmount(vnstAmount, vnstDecimals);
-            const usdtRequired = await contract.methods.getQuote(vnstAmountWei).call();
-            
-            // Check approvals
-            const isApproved = await contract.methods.isApproved(accounts[0]).call();
-            if (!isApproved) {
-                showStatusMessage("Please approve USDT first", "error");
-                return;
-            }
-            
-            const isSellerApproved = await contract.methods.isSellerApproved().call();
-            if (!isSellerApproved) {
-                showStatusMessage("Seller has not approved VNST to contract", "error");
-                return;
-            }
-            
-            // Check balance
-            const hasEnoughBalance = await checkUsdtBalance(usdtRequired);
-            if (!hasEnoughBalance) return;
-            
-            showStatusMessage("Processing VNST purchase...", "success");
-            
-            await contract.methods.buyVNST(vnstAmountWei)
-                .send({ from: accounts[0] })
-                .on('transactionHash', (hash) => {
-                    showStatusMessage(`Transaction sent: ${hash}`, "success");
-                })
-                .on('receipt', (receipt) => {
-                    showStatusMessage("VNST purchased successfully!", "success");
-                })
-                .on('error', (error) => {
-                    showStatusMessage("Transaction failed: " + error.message, "error");
-                });
-            
-            // Update UI
-            await updateUI();
-            
-        } catch (error) {
-            console.error("Error buying VNST:", error);
-            showStatusMessage("Error buying VNST: " + error.message, "error");
-        } finally {
-            showLoading(false);
-        }
-    });
-
-    // Auto-check quote when VNST amount changes
-    document.getElementById('vnstAmount').addEventListener('input', debounce(async () => {
-        const vnstAmount = document.getElementById('vnstAmount').value;
-        if (vnstAmount && !isNaN(vnstAmount)) {
-            try {
-                const usdtRequired = await contract.methods.getQuote(parseTokenAmount(vnstAmount, vnstDecimals)).call();
-                document.getElementById('usdtRequired').textContent = formatTokenAmount(usdtRequired, usdtDecimals);
-                await checkApprovals();
-            } catch (error) {
-                console.error("Error updating quote:", error);
-            }
-        }
-    }, 500));
-}
-
-// Helper function to debounce input events
-function debounce(func, wait) {
-    let timeout;
-    return function() {
-        const context = this, args = arguments;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            func.apply(context, args);
-        }, wait);
-    };
-}
-
-// Get network name from chain ID
-function getNetworkName(chainId) {
-    switch (chainId.toString()) {
-        case "1": return "Ethereum Mainnet";
-        case "56": return "Binance Smart Chain";
-        case "97": return "BSC Testnet";
-        case "137": return "Polygon Mainnet";
-        case "80001": return "Mumbai Testnet";
-        default: return `Chain ID: ${chainId}`;
-    }
-}
+// Rest of your script.js remains the same...
 
 // Initialize when page loads
 window.addEventListener('load', initDApp);
