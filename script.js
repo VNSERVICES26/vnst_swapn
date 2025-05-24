@@ -28,7 +28,12 @@ let accounts = [];
 let currentNetwork;
 let vnstDecimals = 18;
 let usdtDecimals = 18;
-let gateQuotas = {};
+let gateQuotas = {
+    totalQuota: 0,
+    remainingQuota: 0,
+    individualQuota: 0,
+    purchasedAmount: 0
+};
 
 // Initialize the DApp
 async function initDApp() {
@@ -92,7 +97,7 @@ async function initDApp() {
         // Set up event listeners
         setupEventListeners();
         
-        // Listen for account and network changes
+        // Listen for account and network changes using EIP-1193 standard
         if (window.ethereum) {
             window.ethereum.on('accountsChanged', handleAccountsChanged);
             window.ethereum.on('chainChanged', handleChainChanged);
@@ -112,15 +117,21 @@ async function loadGateQuotas() {
     try {
         showLoading(true);
         
+        // Check if the contract has the getGateQuotas method
+        if (!contract.methods.getGateQuotas) {
+            console.warn("getGateQuotas method not found in contract");
+            return;
+        }
+        
         // Get all gate quotas from contract
         const quotas = await contract.methods.getGateQuotas().call();
         
         // Process quotas data
         gateQuotas = {
-            totalQuota: quotas[0],
-            remainingQuota: quotas[1],
-            individualQuota: quotas[2],
-            purchasedAmount: quotas[3]
+            totalQuota: quotas[0] || 0,
+            remainingQuota: quotas[1] || 0,
+            individualQuota: quotas[2] || 0,
+            purchasedAmount: quotas[3] || 0
         };
         
         // Update UI
@@ -128,7 +139,30 @@ async function loadGateQuotas() {
         
     } catch (error) {
         console.error("Error loading gate quotas:", error);
-        showStatusMessage("Error loading gate quotas", "error");
+        showStatusMessage("Error loading gate quotas. Check contract method exists.", "error");
+    } finally {
+        showLoading(false);
+    }
+}
+
+// Alternative method to load quotas if getGateQuotas doesn't exist
+async function loadQuotasAlternative() {
+    try {
+        showLoading(true);
+        
+        // Load individual quota methods if getGateQuotas is not available
+        gateQuotas = {
+            totalQuota: await contract.methods.totalQuota().call() || 0,
+            remainingQuota: await contract.methods.remainingQuota().call() || 0,
+            individualQuota: await contract.methods.individualQuota().call() || 0,
+            purchasedAmount: await contract.methods.purchasedAmount(accounts[0]).call() || 0
+        };
+        
+        updateGateQuotasUI();
+        
+    } catch (error) {
+        console.error("Error loading quotas (alternative method):", error);
+        showStatusMessage("Error loading quota information", "error");
     } finally {
         showLoading(false);
     }
@@ -142,16 +176,16 @@ function updateGateQuotasUI() {
     const purchasedAmountEl = document.getElementById('purchasedAmount');
     
     if (totalQuotaEl) {
-        totalQuotaEl.textContent = formatTokenAmount(gateQuotas.totalQuota || 0, vnstDecimals);
+        totalQuotaEl.textContent = formatTokenAmount(gateQuotas.totalQuota, vnstDecimals);
     }
     if (remainingQuotaEl) {
-        remainingQuotaEl.textContent = formatTokenAmount(gateQuotas.remainingQuota || 0, vnstDecimals);
+        remainingQuotaEl.textContent = formatTokenAmount(gateQuotas.remainingQuota, vnstDecimals);
     }
     if (individualQuotaEl) {
-        individualQuotaEl.textContent = formatTokenAmount(gateQuotas.individualQuota || 0, vnstDecimals);
+        individualQuotaEl.textContent = formatTokenAmount(gateQuotas.individualQuota, vnstDecimals);
     }
     if (purchasedAmountEl) {
-        purchasedAmountEl.textContent = formatTokenAmount(gateQuotas.purchasedAmount || 0, vnstDecimals);
+        purchasedAmountEl.textContent = formatTokenAmount(gateQuotas.purchasedAmount, vnstDecimals);
     }
 }
 
@@ -164,7 +198,7 @@ function handleAccountsChanged(newAccounts) {
         showStatusMessage("Account changed", "info");
     }
     updateUI();
-    loadGateQuotas();
+    loadGateQuotas().catch(() => loadQuotasAlternative());
 }
 
 function handleChainChanged(newChainIdHex) {
@@ -232,7 +266,8 @@ async function switchNetwork(chainId) {
 }
 
 function formatTokenAmount(amount, decimals = 18) {
-    const formatted = (amount / Math.pow(10, decimals)).toFixed(6);
+    const amountNumber = typeof amount === 'string' ? parseFloat(amount) : Number(amount);
+    const formatted = (amountNumber / Math.pow(10, decimals)).toFixed(6);
     return formatted.replace(/\.?0+$/, '');
 }
 
@@ -390,6 +425,11 @@ async function purchaseVNST(usdtAmount) {
         return;
     }
     
+    if (usdtAmount <= 0) {
+        showStatusMessage("Please enter a valid USDT amount", "error");
+        return;
+    }
+    
     showLoading(true);
     try {
         const usdtValue = parseTokenAmount(usdtAmount, usdtDecimals);
@@ -399,7 +439,7 @@ async function purchaseVNST(usdtAmount) {
             
         showStatusMessage(`Purchase successful! Tx hash: ${tx.transactionHash}`, "success");
         await updateUI();
-        await loadGateQuotas(); // Refresh quotas after purchase
+        await loadGateQuotas().catch(() => loadQuotasAlternative()); // Refresh quotas after purchase
         
     } catch (error) {
         console.error("Error purchasing VNST:", error);
@@ -418,7 +458,7 @@ function setupEventListeners() {
             try {
                 accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 await updateUI();
-                await loadGateQuotas();
+                await loadGateQuotas().catch(() => loadQuotasAlternative());
             } catch (error) {
                 showStatusMessage("Error connecting wallet: " + error.message, "error");
             }
@@ -468,7 +508,7 @@ function setupEventListeners() {
     const refreshQuotasBtn = document.getElementById('refreshQuotas');
     if (refreshQuotasBtn) {
         refreshQuotasBtn.addEventListener('click', async () => {
-            await loadGateQuotas();
+            await loadGateQuotas().catch(() => loadQuotasAlternative());
             showStatusMessage("Gate quotas refreshed", "success");
         });
     }
