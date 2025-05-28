@@ -5,68 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VNST Token Swap</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><span class="gold-text">VNST</span> Token Swap</h1>
-            <button id="connectWalletBtn" class="gold-button">Connect Wallet</button>
+            <h1>VNST Token Swap</h1>
+            <button id="connectWalletBtn" class="gold-btn">Connect Wallet</button>
+            <div id="walletInfo" class="hidden">
+                <p>Connected: <span id="walletAddress"></span></p>
+                <p>USDT Balance: <span id="usdtBalance">0</span></p>
+            </div>
         </header>
 
-        <div class="wallet-info" id="walletInfo">
-            <p>Connected: <span id="walletAddress" class="gold-text">Not connected</span></p>
-            <p>Network: <span id="networkName" class="gold-text">Unknown</span></p>
-        </div>
+        <div class="swap-container">
+            <div class="info-panel">
+                <div class="info-item">
+                    <span>VNST Price:</span>
+                    <span id="vnstPrice">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <span>Available VNST:</span>
+                    <span id="availableVNST">Loading...</span>
+                </div>
+            </div>
 
-        <div class="swap-card">
-            <div class="input-group">
-                <label for="vnstAmount">VNST Amount</label>
-                <div class="input-wrapper">
+            <div class="swap-form">
+                <div class="input-group">
+                    <label for="vnstAmount">VNST Amount</label>
                     <input type="number" id="vnstAmount" placeholder="Enter VNST amount">
-                    <button id="pasteVnstBtn" class="gold-button">Paste</button>
+                    <button id="getQuoteBtn" class="gold-btn">Get Quote</button>
                 </div>
-                <p class="min-buy">Minimum: <span class="gold-text">100 VNST</span></p>
-            </div>
 
-            <div class="info-box">
-                <p>USDT Required: <span id="usdtRequired" class="gold-text">0</span> USDT</p>
-                <button id="checkQuoteBtn" class="gold-button">Check Quote</button>
-            </div>
-
-            <div class="approval-section">
-                <div class="approval-status">
-                    <p>USDT Approved: <span id="usdtApprovedStatus" class="gold-text">No</span></p>
-                    <button id="approveUsdtBtn" class="gold-button">Approve USDT</button>
+                <div id="quoteResult" class="hidden">
+                    <p>You will pay: <span id="usdtAmount">0</span> USDT</p>
                 </div>
-                <div class="approval-status">
-                    <p>Seller VNST: <span id="sellerVnstBalance" class="gold-text">0</span> VNST</p>
-                    <p>Seller Approved: <span id="sellerApprovedStatus" class="gold-text">Checking...</span></p>
+
+                <div class="action-buttons">
+                    <button id="approveBtn" class="gold-btn" disabled>Approve USDT</button>
+                    <button id="buyBtn" class="gold-btn" disabled>Buy VNST</button>
                 </div>
-            </div>
 
-            <button id="buyVnstBtn" class="buy-btn">BUY VNST TOKENS</button>
-
-            <div class="status-message" id="statusMessage"></div>
-            
-            <div class="loading-spinner" id="loadingSpinner" style="display: none;">
-                <div class="spinner"></div>
-                <p>Processing Transaction...</p>
+                <div class="contract-info">
+                    <p>VNST Contract: <span id="vnstContract">Loading...</span></p>
+                    <button id="copyContractBtn" class="gold-btn small">Copy Address</button>
+                </div>
             </div>
         </div>
 
-        <div class="contract-info">
-            <h3><span class="gold-text">Contract</span> Information</h3>
-            <p>VNST Price: <span id="vnstPrice" class="gold-text">0.09</span> USDT</p>
-            <p>Your Total Purchased: <span id="totalPurchased" class="gold-text">0</span> VNST</p>
-            <p class="contract-link">
-                <a href="#" id="contractLink" target="_blank" class="gold-text">View Contract on Explorer</a>
-            </p>
+        <div id="statusMessages"></div>
+
+        <div class="network-selector">
+            <button class="network-btn active" data-network="testnet">BSC Testnet</button>
+            <button class="network-btn" data-network="mainnet">BSC Mainnet</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
