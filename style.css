@@ -86,6 +86,7 @@ h1 {
 .info-panel {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 20px;
     padding: 15px;
     background-color: rgba(255, 215, 0, 0.1);
@@ -95,6 +96,8 @@ h1 {
 .info-item {
     display: flex;
     flex-direction: column;
+    margin: 5px 0;
+    min-width: 120px;
 }
 
 .info-item span:first-child {
@@ -127,13 +130,14 @@ h1 {
     background-color: rgba(255, 215, 0, 0.1);
     padding: 15px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin: 15px 0;
     border: 1px solid var(--gold);
 }
 
 .quote-result p {
     color: var(--gold);
     font-weight: bold;
+    text-align: center;
 }
 
 .action-buttons {
@@ -208,11 +212,9 @@ h1 {
     display: none;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 600px) {
     .info-panel {
         flex-direction: column;
-        gap: 10px;
     }
     
     .action-buttons {
