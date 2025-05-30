@@ -123,6 +123,19 @@ h1 {
     margin-bottom: 10px;
 }
 
+.quote-result {
+    background-color: rgba(255, 215, 0, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid var(--gold);
+}
+
+.quote-result p {
+    color: var(--gold);
+    font-weight: bold;
+}
+
 .action-buttons {
     display: flex;
     gap: 10px;
